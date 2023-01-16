@@ -56,15 +56,13 @@ class _TabsScreenState extends State<TabsScreen> {
         type: BottomNavigationBarType.shifting,
         items: [
           BottomNavigationBarItem(
-            backgroundColor: Theme.of(context).primaryColor,
-            icon: Icon(Icons.category),
-            title: Text('Categories'),
-          ),
+              backgroundColor: Theme.of(context).primaryColor,
+              icon: Icon(Icons.category),
+              label: "Categories"),
           BottomNavigationBarItem(
-            backgroundColor: Theme.of(context).primaryColor,
-            icon: Icon(Icons.favorite),
-            title: Text('Favorite'),
-          ),
+              backgroundColor: Theme.of(context).primaryColor,
+              icon: Icon(Icons.favorite),
+              label: 'Favorite'),
         ],
       ),
     );

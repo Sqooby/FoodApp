@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
-
 import '../providers/categories.dart';
 // import '../models/category.dart';
+import './categories_meal_screen.dart';
 
 class CategoriesScreen extends StatelessWidget {
   @override
@@ -20,7 +19,15 @@ class CategoriesScreen extends StatelessWidget {
         itemCount: categoriesList.length,
         itemBuilder: (context, index) {
           return InkWell(
-            onTap: () => {},
+            onTap: () {
+              Navigator.of(context).pushNamed(CategoryMealScreen.routeName,
+                  arguments: {
+                    'id': categoriesList[index].id,
+                    'title': categoriesList[index].title
+                  });
+              print(categoriesList[index].id);
+              print(categoriesList[index].title);
+            },
             borderRadius: BorderRadius.circular(15),
             // splashColor: Theme.of(context).primaryColor,
             child: Container(

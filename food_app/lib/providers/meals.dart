@@ -1,42 +1,10 @@
 import 'package:flutter/material.dart';
 import '../models/meal.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Meals with ChangeNotifier {
   List<Meal> _items = [
-    Meal(
-      id: 'm1',
-      categories: [
-        'c1',
-        'c2',
-      ],
-      title: 'Spaghetti with Tomato Sauce',
-      affordability: Affordability.Affordable,
-      complexity: Complexity.Simple,
-      imageUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg/800px-Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg',
-      duration: 20,
-      ingredients: [
-        '4 Tomatoes',
-        '1 Tablespoon of Olive Oil',
-        '1 Onion',
-        '250g Spaghetti',
-        'Spices',
-        'Cheese (optional)'
-      ],
-      steps: [
-        'Cut the tomatoes and the onion into small pieces.',
-        'Boil some water - add salt to it once it boils.',
-        'Put the spaghetti into the boiling water - they should be done in about 10 to 12 minutes.',
-        'In the meantime, heaten up some olive oil and add the cut onion.',
-        'After 2 minutes, add the tomato pieces, salt, pepper and your other spices.',
-        'The sauce will be done once the spaghetti are.',
-        'Feel free to add some cheese on top of the finished dish.'
-      ],
-      isGlutenFree: false,
-      isVegan: true,
-      isVegetarian: true,
-      isLactoseFree: true,
-    ),
     Meal(
       id: 'm2',
       categories: [
@@ -352,4 +320,44 @@ class Meals with ChangeNotifier {
       isLactoseFree: true,
     ),
   ];
+  List<Meal> get items {
+    return [..._items];
+  }
+
+  void addProduct(Meal meal) {
+    final href = 'https://mealapp-b6a4e-default-rtdb.firebaseio.com/meals.json';
+    final url = Uri.parse(href);
+    http.post(url,
+        body: json.encode({
+          'id': meal.id,
+          'title': meal.title,
+          'steps': meal.steps,
+          'affordability': meal.affordability.toString(),
+          'categories': meal.categories,
+          'complexity': meal.complexity.toString(),
+          'duration': meal.duration,
+          'imageUrl': meal.imageUrl,
+          'ingredients': meal.ingredients,
+          'isGlutenFree': meal.isGlutenFree,
+          'isLactoseFree': meal.isLactoseFree,
+          'isVegan': meal.isVegan,
+          'isVegetarian': meal.isVegetarian,
+        }));
+    final newMeal = Meal(
+        title: meal.title,
+        steps: meal.steps,
+        affordability: meal.affordability,
+        categories: meal.categories,
+        complexity: meal.complexity,
+        duration: meal.duration,
+        id: DateTime.now().toString(),
+        imageUrl: meal.imageUrl,
+        ingredients: meal.ingredients,
+        isGlutenFree: meal.isGlutenFree,
+        isLactoseFree: meal.isLactoseFree,
+        isVegan: meal.isVegan,
+        isVegetarian: meal.isVegetarian);
+    _items.add(newMeal);
+    notifyListeners();
+  }
 }

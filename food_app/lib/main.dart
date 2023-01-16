@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import './providers/categories.dart';
 
 import './screens/categories_screen.dart';
+import './screens/meal_detail_screen.dart';
+import './screens/categories_meal_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -99,10 +101,8 @@ class _MyAppState extends State<MyApp> {
         home: CategoriesScreen(),
         routes: {
           // '/': (ctx) => TabsScreen(_favoriteMeals),
-          // CategoryMealScreen.routeName: (ctx) =>
-          //     CategoryMealScreen(_availableMeal),
-          // MealDetailScreen.routeName: (ctx) =>
-          //     MealDetailScreen(_toggleFavorite, _isMealFavorite),
+          CategoryMealScreen.routeName: (ctx) => CategoryMealScreen(),
+          MealDetailScreen.routeName: (ctx) => MealDetailScreen()
           // FilterScreen.RouteName: (ctx) => FilterScreen(),
         },
       ),
